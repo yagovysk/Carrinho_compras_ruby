@@ -8,6 +8,7 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
+     puts "Este carrinho tem #{@cart.line_items.count} itens"
   end
 
   # GET /carts/new
