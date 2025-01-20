@@ -1,0 +1,10 @@
+=> 
+[32m#<Product:0x00007fdd523e4158[0m
+ id: [34m[1m1[0m,
+ title: [31m[1m"[0m[31mDocker for Rails Developers[0m[31m[1m"[0m,
+ description:
+  [31m[1m"[0m[31m<p>\n      <em>Build, Ship, and Run Your Applications Everywhere</em> Docker does\n      for DevOps what Rails did for web development—it gives you a new set\n      of superpowers. Gone are “works on my machine” woes and lengthy setup\n      tasks, replaced instead by a simple, consistent, Docker-based\n      development environment that will have your team up and running in\n      seconds.  Gain hands-on, real-world experience with a tool that’s\n      rapidly becoming fundamental to software development. Go from zero all\n      the way to production as Docker transforms the massive leap of\n      deploying your app in the cloud into a baby step.\n      </p>[0m[31m[1m"[0m,
+ image_url: [31m[1m"[0m[31mridocker.jpg[0m[31m[1m"[0m,
+ price: [35m[1m0.1995e2[0m,
+ created_at: Wed, 15 Jan 2025 20:15:13.159530000 UTC +00:00,
+ updated_at: Wed, 15 Jan 2025 20:15:13.159530000 UTC +00:00[32m>[0m
