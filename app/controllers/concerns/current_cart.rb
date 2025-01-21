@@ -8,4 +8,3 @@ module CurrentCart
       session[:cart_id] = @cart.id
     end
   end
-  
