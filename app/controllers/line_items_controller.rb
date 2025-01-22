@@ -29,6 +29,7 @@ class LineItemsController < ApplicationController
   
     respond_to do |format|
       if @line_item.save
+        format.turbo_stream
         format.html { redirect_to store_index_url }
         format.json { render :show, status: :created, location: @line_item }
       else
@@ -37,6 +38,8 @@ class LineItemsController < ApplicationController
       end
     end
   end
+  
+  
   
 
   # PATCH/PUT /line_items/1 or /line_items/1.json

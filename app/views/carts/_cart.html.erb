@@ -1,15 +1,21 @@
-<div id="<%= dom_id cart %>">
-  <h2 class="font-bold text-lg mb-3">Your Cart</h2>
-  <table class="table-auto">
-    <%= render cart.line_items %>
-    <tfoot>
-      <tr>
-        <th class="text-right pr-2 pt-2" colspan="3">Total:</th>
-        <td class="text-right pt-2 font-bold border-t-2 border-black">
-          <%= number_to_currency(cart.total_price) %>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-  <%= button_to 'Empty Cart', cart, method: :delete, class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %>
-</div>
+<% if cart && !cart.line_items.empty? %>
+ <div id="<%= dom_id cart %>" class="bg-white p-4 rounded-md shadow-md">
+    <h2 class="font-bold text-lg mb-3">Your Cart</h2>
+    <table class="table-auto w-full">
+      <%= render cart.line_items %>
+      <tfoot>
+        <tr>
+          <th class="text-right pr-2 pt-2" colspan="3">Total:</th>
+          <td class="text-right pt-2 font-bold border-t-2 border-black">
+            <%= number_to_currency(cart.total_price) %>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <%= button_to 'Empty Cart', cart, method: :delete, class: 'ml-4 mt-3 rounded-lg py-1 px-2 text-white bg-green-600 hover:bg-green-700 transition-colors' %>
+  </div>
+<% else %>
+  <div id="cart" class="bg-white rounded-lg shadow-lg p-4 text-gray-500 text-center">
+    Your cart is empty.
+  </div>
+<% end %>
