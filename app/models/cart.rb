@@ -10,11 +10,8 @@ class Cart < ApplicationRecord
     end
     current_item
   end
-<<<<<<< HEAD
 
   def total_price
     line_items.sum { |item| item.total_price }
   end
 end
-=======
->>>>>>> main
