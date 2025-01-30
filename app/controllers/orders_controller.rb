@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   include CurrentCart
 
   before_action :set_cart, only: %i[new create]
-  before_action :ensure_cart_isnt_empty, only: %i[new]
+  before_action :ensure_cart_isnt_empty, only: %i[new create]
   before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders or /orders.json
@@ -27,12 +27,18 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items_from_cart(@cart)
-  
+
     respond_to do |format|
       if @order.save
-        Cart.destroy(session[:cart_id])
-        session[:cart_id] = nil
-        OrderMailer.received(@order).deliver_later
+        # Remover o carrinho de forma segura
+        if session[:cart_id].present?
+          Cart.find_by(id: session[:cart_id])&.destroy
+          session[:cart_id] = nil
+        end
+
+        # Chamar o job para processar o pagamento em segundo plano
+        ChargeOrderJob.perform_later(@order, pay_type_params)
+
         format.html { redirect_to store_index_url, notice: 'Thank you for your order.' }
         format.json { render :show, status: :created, location: @order }
       else
@@ -40,7 +46,7 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
-  end  
+  end
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
@@ -81,6 +87,20 @@ class OrdersController < ApplicationController
   def ensure_cart_isnt_empty
     if @cart.line_items.empty?
       redirect_to store_index_url, notice: 'Your cart is empty'
+    end
+  end
+
+  # Corrigindo pay_type_params
+  def pay_type_params
+    case params.dig(:order, :pay_type)
+    when "Credit card"
+      params.require(:order).permit(:credit_card_number, :expiration_date)
+    when "Check"
+      params.require(:order).permit(:routing_number, :account_number)
+    when "Purchase order"
+      params.require(:order).permit(:po_number)
+    else
+      {}
     end
   end
 end
