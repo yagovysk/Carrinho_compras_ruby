@@ -68,3 +68,22 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   config.action_cable.disable_request_forgery_protection = true
 end
+
+Rails.application.configure do
+  # Configuração para envio de emails via SMTP
+  config.action_mailer.delivery_method = :smtp
+  
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    authentication: "plain",
+    user_name: "yagobuda99@gmail.com",
+    password: "teste_ruby1234",
+    enable_starttls_auto: true
+  }
+
+  # Para visualizar emails no browser em ambiente de desenvolvimento
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+end
