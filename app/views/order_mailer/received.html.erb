@@ -1,0 +1,7 @@
+<h1>Obrigado pelo seu pedido, <%= @order.name %>!</h1>
+<p>Seu pedido foi confirmado.</p>
+<table>
+  <tr><th>Quantidade</th><th>Descrição</th></tr>
+  <%= render @order.line_items %>
+</table>
+<p>Enviaremos outro email quando seu pedido for despachado.</p>
