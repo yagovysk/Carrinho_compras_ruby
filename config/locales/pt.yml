@@ -27,3 +27,26 @@ pt:
         separator: ","
         delimiter: "."
         format:    "%u %n"
+pt:
+  orders:
+    new:
+      legend: "Por favor, insira seus dados"
+    form:
+      name: "Nome"
+      address_html: "Endereço"
+      email: "E-mail"
+      pay_type: "Forma de pagamento"
+      pay_prompt_html: "Selecione um método de pagamento"
+      submit: "Finalizar Pedido"
+      pay_types:
+        "Check": "Cheque"
+        "Credit card": "Cartão de Crédito"
+        "Purchase order": "Ordem de Compra"
+    check:
+      routing_number: "Nº de Roteamento"
+      account_number: "Nº da Conta"
+    cc:
+      cc_number: "Nº do Cartão"
+      expiration_date: "Validade"
+    po:
+      po_number: "Nº da Ordem"
