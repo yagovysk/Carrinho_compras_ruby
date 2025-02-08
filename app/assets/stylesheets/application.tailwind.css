@@ -1,12 +1,9 @@
-@import "tailwindcss/preflight"; /* Substitui @tailwind base */
-@tailwind utilities; /* Combina components e utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* 
-Se você quiser definir componentes personalizados com `@layer`,
-eles ainda são permitidos, como mostrado abaixo:
-*/
 @layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+  .input-field {
+    @apply block shadow rounded-md border border-green-400 outline-none px-3 py-2 mt-2 w-full;
   }
 }
