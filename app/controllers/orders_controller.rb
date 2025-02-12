@@ -33,7 +33,10 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
 
-        format.html { redirect_to store_index_url, notice: 'Thank you for your order.' }
+        # Envia o email de confirmação
+        OrderMailer.received(@order).deliver_later 
+
+        format.html { redirect_to store_index_url, notice: 'Obrigado pelo seu pedido.' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new, status: :unprocessable_entity }
