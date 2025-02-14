@@ -1,0 +1,8 @@
+services:
+  web:
+    secrets:
+      - source: master_key
+        target: /home/app/depot/config/master.key
+secrets:
+  master_key:
+    file: ./config/master.key
