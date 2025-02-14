@@ -78,3 +78,5 @@ gem 'activemodel-serializers-xml'
 group :development, :test, :production do
   gem 'dotenv-rails', groups: [:development, :test, :production]
 end
+
+gem "pg", "~> 1.5", :group => :production
