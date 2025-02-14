@@ -1,11 +1,28 @@
-web:  
-  build: .  
-  volumes:  
-    - ./log:/home/app/depot/log  
-  secrets:  
-    - source: master_key  
-      target: /home/app/depot/config/master.key  
-  ports:  
-    - "8001:80"  
-  depends_on:  
-    - db  
+services:
+  db:
+    image: postgres:15
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+
+  web:  
+    build: .  
+    volumes:  
+      - ./log:/home/app/depot/log  
+    secrets:  
+      - source: master_key  
+        target: /home/app/depot/config/master.key  
+    ports:  
+      - "8001:80"  
+    depends_on:  
+      - db  
+
+secrets:
+  master_key:
+    file: ./config/master.key
+
+volumes:
+  db-data:

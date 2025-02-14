@@ -1,22 +1,69 @@
-FROM phusion/passenger-full:2.2.0  
+# Use a imagem base do Ubuntu 20.04 (focal)
+FROM phusion/passenger-full:2.2.0
 
-RUN rm /etc/nginx/sites-enabled/default  
-RUN rm -f /etc/service/nginx/down  
-RUN rm -f /etc/service/redis/down  
-ADD config/nginx.conf /etc/nginx/sites-enabled/depot.conf  
+# Defina variáveis de ambiente
+ENV RBENV_ROOT /usr/local/rbenv
+ENV PATH "$RBENV_ROOT/bin:$RBENV_ROOT/shims:$PATH"
 
-USER app  
-RUN mkdir /home/app/depot  
-WORKDIR /home/app/depot  
+# Remova serviços desnecessários do Phusion Passenger
+RUN rm -f /etc/service/nginx/down && \
+    rm -f /etc/service/sshd/down
 
-ENV RAILS_ENV=production  
-ENV BUNDLE_WITHOUT="development test"  
-COPY --chown=app:app Gemfile Gemfile.lock ./
-RUN bundle install  
-COPY --chown=app:app . .  
+# Instale dependências do sistema
+RUN apt-get update && \
+    apt-get install -y \
+        curl \
+        git \
+        build-essential \
+        libssl-dev \
+        zlib1g-dev \
+        libreadline-dev \
+        libyaml-dev \
+        libxml2-dev \
+        libxslt-dev \
+        libffi-dev \
+        libgdbm-dev \
+        libncurses5-dev \
+        autoconf \
+        bison \
+        libreadline6-dev \
+        ruby-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN SECRET_KEY_BASE=`bin/rails secret` \  
-  bin/rails assets:precompile  
+# Instale o rbenv e ruby-build
+RUN git clone https://github.com/rbenv/rbenv.git $RBENV_ROOT && \
+    git clone https://github.com/rbenv/ruby-build.git $RBENV_ROOT/plugins/ruby-build && \
+    echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh && \
+    chmod +x /etc/profile.d/rbenv.sh
 
-USER root  
-CMD ["/sbin/my_init"]  
+# Configure o ambiente do rbenv
+RUN echo 'export RBENV_ROOT="/usr/local/rbenv"' >> /etc/profile.d/rbenv.sh && \
+    echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> /etc/profile.d/rbenv.sh && \
+    echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+
+# Instale o Ruby 3.1.6 e defina como global
+RUN /bin/bash -c "source /etc/profile.d/rbenv.sh && \
+    rbenv install 3.1.6 && \
+    rbenv global 3.1.6 && \
+    rbenv rehash && \
+    gem install bundler && \
+    ruby -v"
+
+# Defina o diretório de trabalho
+WORKDIR /app
+
+# Copie o código-fonte do projeto
+COPY . /app
+
+# Instale as dependências do projeto
+RUN bundle install
+
+# Adicione o arquivo de configuração do Nginx
+COPY config/nginx.conf /etc/nginx/sites-enabled/depot.conf
+
+# Expõe a porta 80 (HTTP)
+EXPOSE 80
+
+# Comando padrão para iniciar o Nginx e o Passenger
+CMD ["/sbin/my_init"]
