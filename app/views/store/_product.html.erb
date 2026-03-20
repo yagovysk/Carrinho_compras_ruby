@@ -1,0 +1,23 @@
+<% cache product do %>
+  <li id="<%= dom_id(product) %>" class="product-card flex flex-col">
+    <div class="overflow-hidden rounded-xl bg-slate-100">
+      <% if product.image_url.present? %>
+        <%= image_tag(product.image_url, class: 'h-52 w-full object-cover object-center') %>
+      <% else %>
+        <%= image_tag('600x400.png', class: 'h-52 w-full object-cover object-center') %>
+      <% end %>
+    </div>
+
+    <div class="mt-4 flex flex-1 flex-col">
+      <h3 class="text-base font-bold leading-snug text-slate-900 sm:text-lg"><%= product.title %></h3>
+      <p class="mt-2 max-h-24 overflow-hidden text-sm leading-relaxed text-slate-600"><%= sanitize(product.description) %></p>
+
+      <div class="mt-4 flex items-center justify-between gap-3 pt-2">
+        <p class="text-lg font-extrabold text-slate-900"><%= number_to_currency(product.price) %></p>
+        <%= button_to t('store.add_to_cart'),
+                      line_items_path(product_id: product),
+                      class: 'btn-primary w-auto px-3 py-2 text-sm sm:text-base' %>
+      </div>
+    </div>
+  </li>
+<% end %>

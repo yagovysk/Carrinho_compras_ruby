@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   include CurrentCart
 
   before_action :set_cart, only: %i[new create]
-  before_action :ensure_cart_isnt_empty, only: %i[new]
+  before_action :ensure_cart_isnt_empty, only: %i[new create]
   before_action :set_order, only: %i[show edit update destroy]
 
   # GET /orders or /orders.json
@@ -30,9 +30,9 @@ class OrdersController < ApplicationController
   
     respond_to do |format|
       if @order.save
-        Cart.destroy(session[:cart_id])
+        @cart.destroy
         session[:cart_id] = nil
-        ChargeOrderJob.perform_later(@order, pay_type_params.to_h)
+        ChargeOrderJob.perform_later(@order.id, pay_type_params.to_h)
   
         format.html { redirect_to store_index_url, notice: 'Obrigado pelo seu pedido.' }
         format.json { render :show, status: :created, location: @order }

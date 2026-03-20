@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  product: two
+  product: ruby
   cart: one
-  price: ​1
+  quantity: 1
 
 two:
-  product: ​ruby
-  order: ​one
-  price: ​1
+  product: ruby
+  order: one
+  quantity: 1

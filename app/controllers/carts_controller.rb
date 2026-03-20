@@ -8,7 +8,6 @@ class CartsController < ApplicationController
 
   # GET /carts/1 or /carts/1.json
   def show
-     puts "Este carrinho tem #{@cart.line_items.count} itens"
   end
 
   # GET /carts/new
@@ -50,8 +49,10 @@ class CartsController < ApplicationController
 
   # DELETE /carts/1 or /carts/1.json
   def destroy
-    @cart.destroy if @cart.id == session[:cart_id]
-    session[:cart_id] = nil
+    if @cart.id == session[:cart_id]
+      @cart.destroy
+      session[:cart_id] = nil
+    end
   
     respond_to do |format|
       format.html { redirect_to store_index_url, notice: 'Your cart is currently empty' }

@@ -1,0 +1,50 @@
+pt-BR:
+  layout:
+    page_title: "Loja Online de Livros Pragprog"
+    brand: "Pragmatic Shelf"
+    store_title: "Sua Loja de Livros"
+    fast_checkout: "Checkout rapido com Turbo"
+    nav:
+      home: "Inicio"
+      questions: "Perguntas"
+      news: "Novidades"
+      contact: "Contato"
+  store:
+    featured: "Colecao em destaque"
+    catalog_title: "Seu Catalogo Pragmatico"
+    catalog_description: "Descubra livros que ajudam voce a programar melhor, entregar mais rapido e evoluir na pratica. Interface com checkout limpo e atualizacao do carrinho em tempo real."
+    add_to_cart: "Adicionar ao carrinho"
+  cart:
+    title: "Seu Carrinho"
+    items_count:
+      one: "1 item"
+      other: "%{count} itens"
+    total: "Total"
+    empty_cart: "Esvaziar carrinho"
+    checkout: "Finalizar compra"
+    empty_state: "Seu carrinho esta vazio. Adicione um livro para comecar."
+  pages:
+    questions:
+      title: "Perguntas"
+      description: "Duvidas comuns sobre checkout, pedidos e formas de pagamento."
+      faq:
+        checkout_title: "Como funciona o checkout?"
+        checkout_body: "Adicione livros ao carrinho e clique em Finalizar compra para concluir seu pedido."
+        payment_title: "Quais formas de pagamento sao aceitas?"
+        payment_body: "No momento aceitamos Check, Credit card e Purchase order."
+    news:
+      title: "Novidades"
+      description: "Ultimas atualizacoes e melhorias da experiencia da loja."
+      items:
+        item1_tag: "Atualizacao"
+        item1_title: "Catalogo responsivo melhorado"
+        item1_body: "O catalogo agora se adapta melhor a celulares, tablets e telas grandes."
+        item2_tag: "Novo"
+        item2_title: "Alternador de idioma disponivel"
+        item2_body: "Use os botoes EN/PT no topo para trocar o idioma da interface."
+    contact:
+      title: "Contato"
+      description: "Precisa de ajuda com pedido ou conta? Fale com a gente."
+      email_label: "E-mail"
+      hours_label: "Horario de atendimento"
+      hours_value: "Segunda a sexta, 09:00 - 18:00"

@@ -30,4 +30,52 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  layout:
+    page_title: "Pragprog Books Online Store"
+    brand: "Pragmatic Shelf"
+    store_title: "Your Book Store"
+    fast_checkout: "Fast checkout with Turbo"
+    nav:
+      home: "Home"
+      questions: "Questions"
+      news: "News"
+      contact: "Contact"
+  store:
+    featured: "Featured collection"
+    catalog_title: "Your Pragmatic Catalog"
+    catalog_description: "Discover books that help you code better, ship faster, and keep your craft evolving. Designed with a clean checkout flow and real-time cart updates."
+    add_to_cart: "Add to cart"
+  cart:
+    title: "Your Cart"
+    items_count:
+      one: "1 item"
+      other: "%{count} items"
+    total: "Total"
+    empty_cart: "Empty cart"
+    checkout: "Checkout"
+    empty_state: "Your cart is empty. Add a book to get started."
+  pages:
+    questions:
+      title: "Questions"
+      description: "Common questions about checkout, orders and payment methods."
+      faq:
+        checkout_title: "How does checkout work?"
+        checkout_body: "Add books to your cart and click Checkout to place your order."
+        payment_title: "Which payment methods are accepted?"
+        payment_body: "Check, Credit card and Purchase order are currently available."
+    news:
+      title: "News"
+      description: "Latest updates and improvements from the store experience."
+      items:
+        item1_tag: "Update"
+        item1_title: "Improved responsive catalog"
+        item1_body: "The catalog now adapts better to phones, tablets and large screens."
+        item2_tag: "New"
+        item2_title: "Language switcher available"
+        item2_body: "Use the EN/PT buttons in the header to switch the interface language."
+    contact:
+      title: "Contact"
+      description: "Need help with your order or account? Reach us directly."
+      email_label: "Email"
+      hours_label: "Support hours"
+      hours_value: "Monday to Friday, 9:00 AM - 6:00 PM"

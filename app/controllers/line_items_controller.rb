@@ -10,7 +10,6 @@ class LineItemsController < ApplicationController
 
   # GET /line_items/1 or /line_items/1.json
   def show
-    Rails.logger.info "Este item é do produto #{@line_item.product.title}" # Para logs de depuração
   end
 
   # GET /line_items/new
@@ -55,9 +54,13 @@ class LineItemsController < ApplicationController
 
   # DELETE /line_items/1 or /line_items/1.json
   def destroy
+    cart = @line_item.cart
     @line_item.destroy
+
     respond_to do |format|
-      format.html { redirect_to cart_url(@line_item.cart), notice: "Item removido do carrinho com sucesso." }
+      redirect_path = cart.present? ? cart_url(cart) : store_index_url
+
+      format.html { redirect_to redirect_path, notice: "Item removido do carrinho com sucesso." }
       format.json { head :no_content }
     end
   end
@@ -66,14 +69,13 @@ class LineItemsController < ApplicationController
 
   # Use callbacks to compartilhar configurações comuns ou restrições entre ações.
   def set_line_item
-    @line_item = LineItem.find_by(id: params[:id])
-    unless @line_item
-      redirect_to store_index_url, alert: "Item não encontrado."
-    end
+    @line_item = LineItem.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to store_index_url, alert: "Item não encontrado."
   end
 
   # Apenas permitir uma lista de parâmetros confiáveis.
   def line_item_params
-    params.require(:line_item).permit(:product_id, :cart_id)
+    params.require(:line_item).permit(:product_id, :cart_id, :quantity)
   end
 end

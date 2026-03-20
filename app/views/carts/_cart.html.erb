@@ -1,30 +1,32 @@
 <% if cart && !cart.line_items.empty? %>
-  <div id="<%= dom_id cart %>" class="bg-white p-4 rounded-md shadow-md">
-    <h2 class="font-bold text-lg mb-3">Your Cart</h2>
-    <table class="table-auto w-full border-collapse border border-gray-300">
-    
-      <tbody>
-        <%= render cart.line_items %>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th class="text-right pr-2 pt-2" colspan="3">Total:</th>
-          <td class="text-right pt-2 font-bold border-t-2 border-black">
-            <%= number_to_currency(cart.total_price) %>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
-    <div class="flex justify-end mt-4">
-      <%= button_to 'Empty Cart', cart, method: :delete, class: 'ml-4 py-2 px-4 text-white bg-red-600 hover:bg-red-700 transition-colors rounded-lg' %>
-      <%= link_to 'Checkout', new_order_path, class: 'ml-4 py-2 px-4 text-white bg-blue-600 hover:bg-blue-700 transition-colors rounded-lg' %>
+  <div id="<%= dom_id cart %>" class="cart-shell p-4 sm:p-5">
+    <div class="mb-3 flex items-center justify-between gap-3 border-b border-slate-200 pb-3">
+      <h2 class="text-lg font-bold text-slate-900"><%= t('cart.title') %></h2>
+      <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800"><%= t('cart.items_count', count: cart.line_items.sum(:quantity)) %></span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-slate-700">
+        <tbody class="divide-y divide-slate-100">
+          <%= render cart.line_items %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th class="pt-3 text-left text-sm font-semibold text-slate-700" colspan="3"><%= t('cart.total') %></th>
+            <td class="pt-3 text-right text-base font-extrabold text-slate-900"><%= number_to_currency(cart.total_price) %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <%= button_to t('cart.empty_cart'), cart, method: :delete, class: 'btn-ghost w-full' %>
+      <%= link_to t('cart.checkout'), new_order_path, class: 'btn-primary w-full' %>
     </div>
   </div>
 <% else %>
-   <div class="flex mt-1 bg-white rounded-lg shadow-lg">
-      <%= button_to 'Empty Cart', cart, method: :delete,
-        class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %>
-      <%= button_to 'Checkout', new_order_path, method: :get,
-        class: 'ml-4 rounded-lg py-1 px-2 text-black bg-green-200' %>
-    </div>
+  <div class="cart-shell p-4 sm:p-5">
+    <h2 class="text-lg font-bold text-slate-900"><%= t('cart.title') %></h2>
+    <p class="mt-2 text-sm text-slate-600"><%= t('cart.empty_state') %></p>
+  </div>
 <% end %>
